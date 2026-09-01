@@ -19,7 +19,7 @@ import { AppLayout, useShellConnection } from 'shell';
 import { RocketRideClient } from 'rocketride';
 
 // Import the verified 8-stage pipeline
-import pipeline from '../../../pipelines/Untitled-1.pipe';
+import pipeline from './pipelines/Untitled-1.pipe';
 
 // =============================================================================
 // CLIENT RESOLUTION FALLBACK
