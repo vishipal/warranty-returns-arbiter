@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug warranty & returns arbiter",
+      "type": "msedge",
+      "request": "launch",
+      "url": "https://api.rocketride.ai:443/?appid=local.warranty-returns-arbiter&rrdev=1",
+      "webRoot": "${workspaceFolder}/apps/warranty-returns-arbiter-ui",
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/apps/warranty-returns-arbiter-ui/*",
+        "webpack:///*": "*"
+      }
+    }
+  ]
+}

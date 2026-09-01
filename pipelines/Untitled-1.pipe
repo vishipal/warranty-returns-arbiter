@@ -1,0 +1,698 @@
+{
+  "components": [
+    {
+      "id": "webhook_1",
+      "provider": "webhook",
+      "name": "New Claim",
+      "config": {
+        "hideForm": true,
+        "mode": "Source",
+        "parameters": {},
+        "type": "webhook",
+        "name": "New Claim"
+      },
+      "ui": {
+        "position": {
+          "x": -150,
+          "y": 170
+        },
+        "measured": {
+          "width": 150,
+          "height": 205
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      }
+    },
+    {
+      "id": "ai_analysis_1",
+      "provider": "extract_data",
+      "name": "AI Analysis",
+      "config": {
+        "profile": "default",
+        "default": {
+          "fields": [
+            {
+              "column": "claim_id",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "issue_category",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "severity_score",
+              "defval": "",
+              "type": "decimal"
+            },
+            {
+              "column": "key_symptoms",
+              "defval": "",
+              "type": "text"
+            }
+          ]
+        },
+        "parameters": {},
+        "type": "extract_data",
+        "name": "AI Analysis"
+      },
+      "ui": {
+        "position": {
+          "x": 630,
+          "y": -70
+        },
+        "measured": {
+          "width": 150,
+          "height": 123
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "text",
+          "from": "webhook_1"
+        }
+      ]
+    },
+    {
+      "id": "evidence_verification_1",
+      "provider": "extract_data",
+      "name": "Evidence Verification",
+      "config": {
+        "profile": "default",
+        "default": {
+          "fields": [
+            {
+              "column": "photo_evidence_valid",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "receipt_verified",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "tampering_detected",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "authenticity_score",
+              "defval": "",
+              "type": "decimal"
+            }
+          ]
+        },
+        "parameters": {},
+        "type": "extract_data",
+        "name": "Evidence Verification"
+      },
+      "ui": {
+        "position": {
+          "x": 820,
+          "y": -70
+        },
+        "measured": {
+          "width": 150,
+          "height": 123
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "documents",
+          "from": "ai_analysis_1"
+        }
+      ]
+    },
+    {
+      "id": "warranty_check_1",
+      "provider": "extract_data",
+      "name": "Warranty Check",
+      "config": {
+        "profile": "default",
+        "default": {
+          "fields": [
+            {
+              "column": "warranty_status",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "coverage_type",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "purchase_date",
+              "defval": "",
+              "type": "date"
+            },
+            {
+              "column": "warranty_expiration",
+              "defval": "",
+              "type": "date"
+            },
+            {
+              "column": "eligible_for_return",
+              "defval": "",
+              "type": "text"
+            }
+          ]
+        },
+        "parameters": {},
+        "type": "extract_data",
+        "name": "Warranty Check"
+      },
+      "ui": {
+        "position": {
+          "x": 1020,
+          "y": -60
+        },
+        "measured": {
+          "width": 150,
+          "height": 123
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "documents",
+          "from": "evidence_verification_1"
+        }
+      ]
+    },
+    {
+      "id": "ai_recommendation_1",
+      "provider": "extract_data",
+      "name": "AI Recommendation",
+      "config": {
+        "profile": "default",
+        "default": {
+          "fields": [
+            {
+              "column": "recommended_action",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "estimated_cost",
+              "defval": "",
+              "type": "decimal"
+            },
+            {
+              "column": "fraud_risk_tier",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "recommendation_rationale",
+              "defval": "",
+              "type": "text"
+            }
+          ]
+        },
+        "parameters": {},
+        "type": "extract_data",
+        "name": "AI Recommendation"
+      },
+      "ui": {
+        "position": {
+          "x": 1220,
+          "y": -50
+        },
+        "measured": {
+          "width": 150,
+          "height": 123
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "documents",
+          "from": "warranty_check_1"
+        }
+      ]
+    },
+    {
+      "id": "human_review_1",
+      "provider": "extract_data",
+      "name": "Human Review",
+      "config": {
+        "profile": "default",
+        "default": {
+          "fields": [
+            {
+              "column": "reviewer_id",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "review_status",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "review_notes",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "flagged_exceptions",
+              "defval": "",
+              "type": "text"
+            }
+          ]
+        },
+        "parameters": {},
+        "type": "extract_data",
+        "name": "Human Review"
+      },
+      "ui": {
+        "position": {
+          "x": 1450,
+          "y": -40
+        },
+        "measured": {
+          "width": 150,
+          "height": 123
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "documents",
+          "from": "ai_recommendation_1"
+        }
+      ]
+    },
+    {
+      "id": "human_decision_1",
+      "provider": "extract_data",
+      "name": "Human Decision",
+      "config": {
+        "profile": "default",
+        "default": {
+          "fields": [
+            {
+              "column": "final_action",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "override_ai",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "override_reason",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "decision_timestamp",
+              "defval": "",
+              "type": "datetime"
+            }
+          ]
+        },
+        "parameters": {},
+        "type": "extract_data",
+        "name": "Human Decision"
+      },
+      "ui": {
+        "position": {
+          "x": 1680,
+          "y": -20
+        },
+        "measured": {
+          "width": 150,
+          "height": 123
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "documents",
+          "from": "human_review_1"
+        }
+      ]
+    },
+    {
+      "id": "final_claim_status_1",
+      "provider": "extract_data",
+      "name": "Final Claim Status",
+      "config": {
+        "profile": "default",
+        "default": {
+          "fields": [
+            {
+              "column": "claim_status",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "payout_amount",
+              "defval": "",
+              "type": "decimal"
+            },
+            {
+              "column": "customer_notified",
+              "defval": "",
+              "type": "text"
+            },
+            {
+              "column": "completion_timestamp",
+              "defval": "",
+              "type": "datetime"
+            }
+          ]
+        },
+        "name": "Final Claim Status",
+        "parameters": {},
+        "type": "extract_data"
+      },
+      "ui": {
+        "position": {
+          "x": 1880,
+          "y": 10
+        },
+        "measured": {
+          "width": 150,
+          "height": 123
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "documents",
+          "from": "human_decision_1"
+        }
+      ]
+    },
+    {
+      "id": "response_answers_1",
+      "provider": "response_answers",
+      "name": "Response Answers",
+      "config": {
+        "laneName": "answers",
+        "parameters": {},
+        "type": "response_answers"
+      },
+      "ui": {
+        "position": {
+          "x": 2060,
+          "y": 40
+        },
+        "measured": {
+          "width": 150,
+          "height": 68
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "input": [
+        {
+          "lane": "answers",
+          "from": "final_claim_status_1"
+        }
+      ]
+    },
+    {
+      "id": "llm_gemini_1",
+      "provider": "llm_gemini",
+      "name": "Gemini",
+      "config": {
+        "profile": "gemini-3_1-pro-preview",
+        "gemini-3_1-pro-preview": {
+          "apikey": "${ROCKETRIDE_GEMINI_KEY}"
+        },
+        "parameters": {
+          "llm_gemini": {
+            "profile": "gemini-3_1-pro-preview"
+          }
+        },
+        "name": "Gemini",
+        "type": "llm_gemini"
+      },
+      "ui": {
+        "position": {
+          "x": 630,
+          "y": 90
+        },
+        "measured": {
+          "width": 150,
+          "height": 68
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "control": [
+        {
+          "classType": "llm",
+          "from": "ai_analysis_1"
+        }
+      ]
+    },
+    {
+      "id": "llm_gemini_2",
+      "provider": "llm_gemini",
+      "name": "Gemini",
+      "config": {
+        "profile": "gemini-3_1-pro-preview",
+        "gemini-3_1-pro-preview": {
+          "apikey": "${ROCKETRIDE_GEMINI_KEY}"
+        },
+        "parameters": {
+          "llm_gemini": {
+            "profile": "gemini-3_1-pro-preview"
+          }
+        },
+        "name": "Gemini",
+        "type": "llm_gemini"
+      },
+      "ui": {
+        "position": {
+          "x": 820,
+          "y": 90
+        },
+        "measured": {
+          "width": 150,
+          "height": 68
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "control": [
+        {
+          "classType": "llm",
+          "from": "evidence_verification_1"
+        }
+      ]
+    },
+    {
+      "id": "llm_gemini_3",
+      "provider": "llm_gemini",
+      "name": "Gemini",
+      "config": {
+        "profile": "gemini-3_1-pro-preview",
+        "gemini-3_1-pro-preview": {
+          "apikey": "${ROCKETRIDE_GEMINI_KEY}"
+        },
+        "parameters": {
+          "llm_gemini": {
+            "profile": "gemini-3_1-pro-preview"
+          }
+        },
+        "name": "Gemini",
+        "type": "llm_gemini"
+      },
+      "ui": {
+        "position": {
+          "x": 1020,
+          "y": 100
+        },
+        "measured": {
+          "width": 150,
+          "height": 68
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "control": [
+        {
+          "classType": "llm",
+          "from": "warranty_check_1"
+        }
+      ]
+    },
+    {
+      "id": "llm_gemini_4",
+      "provider": "llm_gemini",
+      "name": "Gemini",
+      "config": {
+        "profile": "gemini-3_1-pro-preview",
+        "gemini-3_1-pro-preview": {
+          "apikey": "${ROCKETRIDE_GEMINI_KEY}"
+        },
+        "parameters": {
+          "llm_gemini": {
+            "profile": "gemini-3_1-pro-preview"
+          }
+        },
+        "name": "Gemini",
+        "type": "llm_gemini"
+      },
+      "ui": {
+        "position": {
+          "x": 1220,
+          "y": 110
+        },
+        "measured": {
+          "width": 150,
+          "height": 68
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "control": [
+        {
+          "classType": "llm",
+          "from": "ai_recommendation_1"
+        }
+      ]
+    },
+    {
+      "id": "llm_gemini_5",
+      "provider": "llm_gemini",
+      "name": "Gemini",
+      "config": {
+        "profile": "gemini-3_1-pro-preview",
+        "gemini-3_1-pro-preview": {
+          "apikey": "${ROCKETRIDE_GEMINI_KEY}"
+        },
+        "parameters": {
+          "llm_gemini": {
+            "profile": "gemini-3_1-pro-preview"
+          }
+        },
+        "name": "Gemini",
+        "type": "llm_gemini"
+      },
+      "ui": {
+        "position": {
+          "x": 1450,
+          "y": 120
+        },
+        "measured": {
+          "width": 150,
+          "height": 68
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "control": [
+        {
+          "classType": "llm",
+          "from": "human_review_1"
+        }
+      ]
+    },
+    {
+      "id": "llm_gemini_6",
+      "provider": "llm_gemini",
+      "name": "Gemini",
+      "config": {
+        "profile": "gemini-3_1-pro-preview",
+        "gemini-3_1-pro-preview": {
+          "apikey": "${ROCKETRIDE_GEMINI_KEY}"
+        },
+        "parameters": {
+          "llm_gemini": {
+            "profile": "gemini-3_1-pro-preview"
+          }
+        },
+        "name": "Gemini",
+        "type": "llm_gemini"
+      },
+      "ui": {
+        "position": {
+          "x": 1680,
+          "y": 130
+        },
+        "measured": {
+          "width": 150,
+          "height": 68
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "control": [
+        {
+          "classType": "llm",
+          "from": "human_decision_1"
+        }
+      ]
+    },
+    {
+      "id": "llm_gemini_7",
+      "provider": "llm_gemini",
+      "name": "Gemini",
+      "config": {
+        "profile": "gemini-3_1-pro-preview",
+        "gemini-3_1-pro-preview": {
+          "apikey": "${ROCKETRIDE_GEMINI_KEY}"
+        },
+        "parameters": {
+          "llm_gemini": {
+            "profile": "gemini-3_1-pro-preview"
+          }
+        },
+        "name": "Gemini",
+        "type": "llm_gemini"
+      },
+      "ui": {
+        "position": {
+          "x": 1880,
+          "y": 140
+        },
+        "measured": {
+          "width": 150,
+          "height": 68
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      },
+      "control": [
+        {
+          "classType": "llm",
+          "from": "final_claim_status_1"
+        }
+      ]
+    }
+  ],
+  "project_id": "21d330cf-3eb1-42fe-9820-ff78220620d8",
+  "snapToGrid": true,
+  "snapGridSize": [
+    10,
+    10
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "version": 1,
+  "isLocked": false,
+  "docRevision": 44
+}
